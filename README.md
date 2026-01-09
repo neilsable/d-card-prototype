@@ -1,5 +1,7 @@
 # D-Card — Digital University ID (Prototype)
 
+![D-Card Product Screenshot](docs/images/product.png)
+
 D-Card is an NFC-enabled, wallet-ready digital university identity system designed to replace physical student and staff ID cards.
 
 This project was developed as part of the **New Product Development** module during the **MSc Technology Management at UCL**.
