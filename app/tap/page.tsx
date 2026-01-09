@@ -1,68 +1,19 @@
-"use client";
+import { Suspense } from "react";
+import TapClient from "./TapClient";
 
 export const dynamic = "force-dynamic";
-
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { AppShell } from "@/components/app-shell";
-import { addLog } from "@/lib/store";
-import { evaluateAccess } from "@/lib/rules";
-import { Location } from "@/lib/types";
+export const revalidate = 0;
 
 export default function TapPage() {
-  const sp = useSearchParams();
-  const token = (sp.get("token") || "").trim();
-  const location = (sp.get("location") || "library") as Location;
-
-  const decision = evaluateAccess({ token, location });
-
-  // Log once per session visit (client-side only)
-  if (typeof window !== "undefined") {
-    const key = `dcard_tap_logged_${token}_${location}_${sp.toString()}`;
-    if (!sessionStorage.getItem(key)) {
-      addLog({
-        ts: new Date().toISOString(),
-        token,
-        location,
-        ok: decision.ok,
-        reason: decision.reason,
-      });
-      sessionStorage.setItem(key, "1");
-    }
-  }
-
   return (
-    <AppShell>
-      <div className="card max-w-3xl">
-        <h1 className="text-2xl font-semibold">Tap Result</h1>
-        <p className="mt-2 text-sm text-white/70">
-          This page reads query parameters (token, location), so it runs dynamically.
-        </p>
-
-        <div className="mt-6 panel">
-          <div className={`text-lg font-semibold ${decision.ok ? "text-emerald-200" : "text-rose-200"}`}>
-            {decision.ok ? "Access Granted" : "Access Denied"}
-          </div>
-
-          <div className="mt-3 text-sm text-white/70">
-            Location: <span className="text-white">{location}</span>
-          </div>
-          <div className="mt-2 text-sm text-white/70">{decision.reason}</div>
-
-          <div className="mt-4 rounded-2xl border border-white/10 bg-black/25 p-4">
-            <div className="text-xs text-white/60">Token</div>
-            <div className="mt-1 break-all font-mono text-xs text-white/80">
-              {token || "(empty)"}
-            </div>
-          </div>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center text-white/70">
+          Loading tap result…
         </div>
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link className="btn-primary" href="/terminal">Go to Terminal</Link>
-          <Link className="btn" href="/card">My D-Card</Link>
-          <Link className="btn" href="/">Home</Link>
-        </div>
-      </div>
-    </AppShell>
+      }
+    >
+      <TapClient />
+    </Suspense>
   );
 }
