@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# D-Card — Digital University ID (Prototype)
 
-## Getting Started
+D-Card is an NFC-enabled, wallet-ready digital university identity system designed to replace physical student and staff ID cards.
 
-First, run the development server:
+This project was developed as part of the **New Product Development** module during the **MSc Technology Management at UCL**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The prototype demonstrates how a secure, mobile-first credential can support campus access, identity verification, and role-based permissions for students, staff, guests, and administrators.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Capabilities
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Digital identity registration and verification
+- Role-based access decisions (student, staff, guest)
+- NFC-style tap simulation for campus terminals
+- Apple Wallet and Google Wallet visual previews
+- Admin approval and audit logging
+- Guest / day-pass support
+- Cloud deployment using Next.js and Vercel
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Live Demo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🔗 **Live URL**: https://d-card-prototype.vercel.app  
+🔗 **Repository**: https://github.com/neilsable/d-card-prototype
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Technology Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Vercel (deployment)
+- Client-side token simulation (prototype scope)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Disclaimer
+
+This is a **conceptual and functional prototype**.
+No real NFC hardware, personal data storage, or institutional systems are connected.
+
+---
+
+## Documentation
+
+- [Product Overview](docs/PRODUCT_OVERVIEW.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Security Model](docs/SECURITY.md)
+- [Deployment Guide](docs/DEPLOYMENT.md)
