@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
@@ -14,7 +16,7 @@ export default function TapPage() {
 
   const decision = evaluateAccess({ token, location });
 
-  // log once per session visit
+  // Log once per session visit (client-side only)
   if (typeof window !== "undefined") {
     const key = `dcard_tap_logged_${token}_${location}_${sp.toString()}`;
     if (!sessionStorage.getItem(key)) {
@@ -33,20 +35,25 @@ export default function TapPage() {
     <AppShell>
       <div className="card max-w-3xl">
         <h1 className="text-2xl font-semibold">Tap Result</h1>
-        <p className="mt-2 text-sm text-white/70">Simulates an NFC deep link opened after a tap.</p>
+        <p className="mt-2 text-sm text-white/70">
+          This page reads query parameters (token, location), so it runs dynamically.
+        </p>
 
         <div className="mt-6 panel">
           <div className={`text-lg font-semibold ${decision.ok ? "text-emerald-200" : "text-rose-200"}`}>
             {decision.ok ? "Access Granted" : "Access Denied"}
           </div>
+
           <div className="mt-3 text-sm text-white/70">
             Location: <span className="text-white">{location}</span>
           </div>
           <div className="mt-2 text-sm text-white/70">{decision.reason}</div>
 
-          <div className="mt-4 rounded-2xl border border-white/15 bg-white/5 p-4">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-black/25 p-4">
             <div className="text-xs text-white/60">Token</div>
-            <div className="mt-1 break-all font-mono text-xs text-white/85">{token || "(empty)"}</div>
+            <div className="mt-1 break-all font-mono text-xs text-white/80">
+              {token || "(empty)"}
+            </div>
           </div>
         </div>
 
