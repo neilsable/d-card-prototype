@@ -1,26 +1,162 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---------- Background layers ---------- */
+
+/* Subtle grid */
+.bg-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255,255,255,0.08) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Aurora lighting (AI-era, restrained) */
+.aurora {
+  background:
+    radial-gradient(900px 520px at 18% 18%, rgba(20,241,217,0.18), transparent 55%),
+    radial-gradient(820px 520px at 78% 28%, rgba(20,241,217,0.10), transparent 58%),
+    radial-gradient(1200px 800px at 50% 50%, rgba(255,255,255,0.05), transparent 65%);
+  filter: saturate(1.1);
+}
+
+/* Dark vignette */
+.vignette {
+  background: radial-gradient(
+    circle at 50% 30%,
+    transparent 0%,
+    rgba(0,0,0,0.55) 75%,
+    rgba(0,0,0,0.85) 100%
+  );
+}
+
+/* Remove tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Components ---------- */
+
+@layer components {
+
+  /* Glass card */
+  .card {
+    @apply rounded-3xl border p-6 shadow-2xl;
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.07),
+      rgba(255,255,255,0.04)
+    );
+    border-color: rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+  }
+
+  .panel {
+    @apply rounded-3xl border p-6;
+    background: rgba(10,14,20,0.55);
+    border-color: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+  }
+
+  /* ---------- Buttons (GLOBAL SYSTEM) ---------- */
+
+  /* Default buttons */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-2xl border
+      px-4 py-3 text-sm transition duration-200;
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.75);
+  }
+
+  /* Hover = SINGLE teal accent */
+  .btn:hover {
+    background: #14F1D9;
+    border-color: rgba(20,241,217,0.55);
+    color: #071018;
+    transform: translateY(-1px);
+    box-shadow: 0 20px 55px rgba(20,241,217,0.35);
+  }
+
+  /* Primary buttons (same behavior, no default color) */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-2xl border
+      px-4 py-3 text-sm font-medium transition duration-200;
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.85);
+  }
+
+  .btn-primary:hover {
+    background: #14F1D9;
+    border-color: rgba(20,241,217,0.55);
+    color: #071018;
+    transform: translateY(-1px);
+    box-shadow: 0 22px 60px rgba(20,241,217,0.40);
+  }
+
+  /* ---------- Inputs ---------- */
+
+  .field {
+    @apply mt-1 w-full rounded-2xl border px-4 py-3
+      text-white outline-none transition duration-200;
+    background: rgba(5,8,12,0.55);
+    border-color: rgba(255,255,255,0.18);
+  }
+
+  .field::placeholder {
+    color: rgba(255,255,255,0.35);
+  }
+
+  .field:focus {
+    border-color: rgba(20,241,217,0.65);
+    box-shadow: 0 0 0 3px rgba(20,241,217,0.22);
+  }
+
+  .label {
+    @apply text-sm;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-xs;
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.65);
+  }
+
+  a {
+    @apply transition;
+  }
+
+  a:hover {
+    color: #14F1D9;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------- Wallet flip helpers ---------- */
+
+.wallet-perspective {
+  perspective: 1200px;
+}
+
+.wallet-card {
+  transform-style: preserve-3d;
+}
+
+.wallet-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.wallet-back {
+  transform: rotateY(180deg);
 }

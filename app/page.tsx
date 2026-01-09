@@ -1,65 +1,97 @@
-import Image from "next/image";
+import Link from "next/link";
+import { AppShell } from "@/components/app-shell";
 
-export default function Home() {
+const actions = [
+  { href: "/register", label: "Register", primary: true, desc: "Create your UNI identity request" },
+  { href: "/status", label: "My Status", desc: "Track verification & issuance" },
+  { href: "/card", label: "My D-Card", desc: "View token + tap links" },
+  { href: "/terminal", label: "Terminal (Tap)", desc: "Simulate campus access checks" },
+  { href: "/admin", label: "Admin Portal", desc: "Approve / reject / revoke" },
+  { href: "/wallet", label: "Wallet Preview", desc: "Apple + Google UI replicas" },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <AppShell>
+      <div className="card relative overflow-hidden">
+        {/* Product Summary as a distinct tile */}
+        <div className="absolute right-6 top-6 hidden md:block">
+          <Link
+            href="/about"
+            className="group rounded-2xl border border-white/10 px-4 py-3 text-sm text-white/80 transition"
+            style={{
+              background: "rgba(255,255,255,0.04)",
+              backdropFilter: "blur(12px)",
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className="h-9 w-9 rounded-xl"
+                style={{
+                  background: "#14F1D9",
+                  boxShadow: "0 14px 35px rgba(20,241,217,0.18)",
+                }}
+              />
+              <div className="leading-tight">
+                <div className="font-semibold">Product Summary</div>
+                <div className="text-xs text-white/55 group-hover:text-white/70">
+                  Architecture · Security · Roles
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        <p className="text-sm text-white/60">
+          UNI App Prototype • Wallet-ready credential (simulated via token + deep link)
+        </p>
+
+        {/* Hero */}
+        <div className="mt-5">
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.02]">
+            <span style={{ color: "#14F1D9" }}>D-Card</span>{" "}
+            <span className="text-white/85">— Digital University ID</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p className="mt-4 max-w-3xl text-white/70 leading-relaxed">
+            A secure, mobile-first credential for students, staff, guests and contractors — with compliance
+            verification, revocation, role-based access decisions, and audit logging.
           </p>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link className="btn-primary" href="/register">Start registration</Link>
+            <Link className="btn" href="/wallet">See wallet preview</Link>
+            <Link className="btn" href="/terminal">Open terminal</Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Action grid */}
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {actions.map((a) => (
+            <Link
+              key={a.href}
+              href={a.href}
+              className={a.primary ? "btn-primary" : "btn"}
+              style={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              <div className="text-left">
+                <div className="font-semibold">{a.label}</div>
+                <div className="text-xs opacity-70">{a.desc}</div>
+              </div>
+              <div className="text-white/60">↗</div>
+            </Link>
+          ))}
         </div>
-      </main>
-    </div>
+
+        <div className="mt-10 rounded-2xl border border-white/10 bg-black/25 p-5 text-sm text-white/60">
+          Note: Browser NFC is limited. This prototype demonstrates the production pattern:
+          a terminal validates a token and returns an access decision.
+        </div>
+      </div>
+    </AppShell>
   );
 }
